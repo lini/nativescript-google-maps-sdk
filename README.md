@@ -39,17 +39,31 @@ Live Demo [here](https://tinyurl.com/m7ndp7u)
  
 ## Setup Android API Key
 
-First copy over the template string resource files for Android
+Go to your app's Android resources (usually in the `app/App_Resources/Android/` directory) and create a `values/strings.xml` file if it does not already exist. Add the `nativescript_google_maps_api_key` in the resource XML file as shown bellow and put your API key there:
 
-```
-cp -r node_modules/nativescript-google-maps-sdk/platforms/android/res/values app/App_Resources/Android/
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nativescript_google_maps_api_key">PUT_API_KEY_HERE</string>
+</resources>
 ```
 
-Next modify the file at `app/App_Resources/Android/values/nativescript_google_maps_api.xml`, uncomment `nativescript_google_maps_api_key` string and replace `PUT_API_KEY_HERE` with your api key.
+Next, open your app's Android manifest, located at `app/App_Resources/Android/AndroidManifest.xml` and add the Google Maps SDK configuration at the end of the `<application>` section:
+
+```xml
+<application>
+<!-- ... -->
+
+<meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/nativescript_google_maps_api_key" />
+
+</application>
+```
 
 The plugin will default to latest available version of the Android `play-services-maps` SDK.  If you need to change the version, you can add a project ext property `googlePlayServicesVersion` like so:
 
-```
+```groovy
 //   /app/App_Resources/Android/app.gradle
 
 project.ext {
